@@ -13,7 +13,6 @@ type RegisterState = {
     email: string, 
     password: string, 
     repeatedPassword: string,
-    isHost: boolean
   }
  
 class Register extends Component<RegisterProps, RegisterState> {
@@ -26,7 +25,6 @@ class Register extends Component<RegisterProps, RegisterState> {
             email : 'john@gmail.com', 
             password: '******', 
             repeatedPassword: '******', 
-            isHost: true
         }
     }
 
@@ -80,14 +78,13 @@ class Register extends Component<RegisterProps, RegisterState> {
         const repeatedPassword = this.state.password // validar que sea igual al password
         const firstName = this.state.firstName
         const lastName = this.state.lastName
-        const isHost = this.state.isHost
         const URL = "http://localhost:8080/api/v1/users/register";
         const body = {
             mail: email,
             password: password,
             firstName: firstName,
             lastName: lastName,
-            type: isHost ? "HOST_USER" : "TRAVELER_USER"
+            type: "BACKOFFICE_USER"
         }
         try {
             const response = await fetch(URL, 
