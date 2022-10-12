@@ -31,7 +31,7 @@ class Register extends Component<RegisterProps, RegisterState> {
     render(){
         return (
             <section className='register-section'>
-                <div className="title">MY PLACE</div>
+                <div className="title">MY PLACE (BACKOFFICE) </div>
                 <form className="register-form">
                 <TextField sx={{ mb: 4, mt: 4}} 
                     onChange={e => this.setState({firstName: e.target.value})} 
