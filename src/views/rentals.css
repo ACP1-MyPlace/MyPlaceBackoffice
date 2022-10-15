@@ -1,11 +1,7 @@
 /* TODO */
 
 .rentals-title{
-    position: absolute;
-    width: 684px;
-    height: 64px;
-    left: 262px;
-    top: 171px;
+
 
     font-style: normal;
     font-weight: 700;
@@ -21,11 +17,7 @@
 }
 
 .rentals-total{
-    position: absolute;
-    width: 436px;
-    height: 52px;
-    left: 262px;
-    top: 235px;
+
 
     font-style: normal;
     font-weight: 400;
@@ -37,11 +29,39 @@
 }
 
 .rentals-table{
-    position: absolute;
-    width: 1204px;
-    height: 583px;
-    left: 262px;
-    top: 304px;
-
+    background-color: white;
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.rentals-header{
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 50px;
+}
+
+.rentals-loading-status{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+
+thead{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+
+    color: #E74562;
+}
+
+th{
+    justify-content: center;
+}
+
+tr {
+    width:100%;
+    text-align:center
 }
