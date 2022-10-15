@@ -1,38 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFillEyeFill, BsPencilSquare, BsFillTrashFill, BsFillHouseFill, BsBuilding } from "react-icons/bs";
+import { useFetch } from '../fetch/useFetch';
+import { Rental } from '../types/Rentals';
 import "./rentals.css"
 
-interface Rental {
-    id: string;
-    photo: string;
-    country: string;
-    address: string;
-    type: "HOUSE" | "APARTMENT";
-    price: number;
-    host: string;
-    totalReservations: number;
-}
+
 
 const sampleData : Rental[] = [
     {    
-        id: "abc",
-        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
-        country: "Argentina",
-        address: "Rivadavia 123, CABA",
-        type: "APARTMENT",
-        price: 120,
         host: "doe@mail.com",
-        totalReservations: 15
+        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
+        totalReservations: 15,
+
+        id: 1,
+        userId: 2,
+        propertyType: "HOUSE",
+        country: "Argentina",
+        state: "Buenos Aires",
+        street: "Rivadavia",
+        streetNumber: "4523",
+        price: {
+            currency: {
+                currencyId: "USD",
+                currencyName: "Dolares"
+            },
+            amount: 120
+        }
     },
     {    
-        id: "abc2",
-        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
-        country: "Argentina",
-        address: "Rivadavia 123, CABA",
-        type: "HOUSE",
-        price: 120,
         host: "doe@mail.com",
-        totalReservations: 1
+        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
+        totalReservations: 23,
+
+        id: 2,
+        userId: 2,
+        propertyType: "APARTMENT",
+        country: "Argentina",
+        state: "Buenos Aires",
+        street: "Rivadavia",
+        streetNumber: "145",
+        price: {
+            currency: {
+                currencyId: "ARS",
+                currencyName: "Pesos argentinos"
+            },
+            amount: 5000
+        }
     }
 ]
 
@@ -57,9 +70,9 @@ const mapRentalToTable = (rental : Rental) => {
                 />
             </td>
             <td> {rental.country} </td>
-            <td> {rental.address} </td>
-            <td> {rental.type == "APARTMENT" ? <BsBuilding /> : <BsFillHouseFill />} </td>
-            <td> {rental.price + " USD"} </td>
+            <td> {`${rental.state}, ${rental.street} ${rental.streetNumber}`} </td>
+            <td> {rental.propertyType == "APARTMENT" ? <BsBuilding /> : <BsFillHouseFill />} </td>
+            <td> {`${rental.price.amount} ${rental.price.currency.currencyName}`} </td>
             <td> {rental.host} </td>
             <td> {getTotalReservationsText(rental.totalReservations)} </td>
             <td> {<BsFillEyeFill /> }{<BsPencilSquare />} {<BsFillTrashFill />} </td>
@@ -71,34 +84,50 @@ const mapRentalToTable = (rental : Rental) => {
 
 export const Rentals = () => { 
 
-    // TODO obtener datos
+    // TODO agregar token y url configurable
+    const url = "http://localhost:8080/api/v1/accommodations";
+
+    const {data, loading, error} = useFetch<Rental[]>(url)
     const [totalRentals, setTotalRentals] = useState(0)
+
+    useEffect(() => {
+        if(data)
+            setTotalRentals(data.length)
+    }, [data])
 
     return (
         <div>
             <h1 className="rentals-title">Visualizador de Alojamientos</h1>
             <h2 className="rentals-total">Totales: {totalRentals} alojamientos</h2>
 
-            <div className='rentals-table'>
-                <table>
-                    <thead style={{color:'#E74562'}}>
-                        <tr>
-                            <th>Foto</th>
-                            <th>País</th>
-                            <th>Dirección</th>
-                            <th>Tipo</th>
-                            <th>Precio</th>
-                            <th>Anfitrión</th>
-                            <th>Historico reservas</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {sampleData.map(mapRentalToTable)}
-                    </tbody>
-                </table>
-            </div>
+            {loading &&  <div className="alert alert-info"> Cargando... </div> }
+            {error &&  <div className="alert alert-danger"> Error cargando la información </div> }
+            {!loading && data && rentalsTable(data)}
         </div>
     )
+}
+
+const rentalsTable = (data : Rental[]) => {
+    
+
+    return <div className='rentals-table'>
+        <table>
+            <thead style={{ color: '#E74562' }}>
+                <tr>
+                    <th>Foto</th>
+                    <th>País</th>
+                    <th>Dirección</th>
+                    <th>Tipo</th>
+                    <th>Precio</th>
+                    <th>Anfitrión</th>
+                    <th>Historico reservas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {sampleData.map(mapRentalToTable)}
+            </tbody>
+        </table>
+    </div>;
 }
