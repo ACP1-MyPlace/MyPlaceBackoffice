@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { createTheme } from '@mui/material/styles';
 import './Register.css';
+import {Stack} from "@mui/material";
 
 type RegisterProps = {}
 type RegisterState = { 
@@ -30,45 +29,46 @@ class Register extends Component<RegisterProps, RegisterState> {
 
     render(){
         return (
-            <section className='register-section'>
-                <div className="title">MY PLACE (BACKOFFICE) </div>
-                <form className="register-form">
-                <TextField sx={{ mb: 4, mt: 4}} 
-                    onChange={e => this.setState({firstName: e.target.value})} 
-                    variant="outlined"  
-                    label="Nombre" 
-                    value={this.state.firstName} />
-                <TextField sx={{ mb: 4 }} 
-                    onChange={e => this.setState({lastName: e.target.value})} 
-                    variant="outlined"  
-                    label="Apellido" 
-                    value={this.state.lastName} />
-                <TextField sx={{ mb: 4 }} 
-                    onChange={e => this.setState({email: e.target.value})} 
-                    variant="outlined" 
-                    label="Email" 
-                    value={this.state.email}/>
-                <TextField sx={{ mb: 4 }}
-                    onChange={e => this.setState({password: e.target.value})}  
-                    variant="outlined" 
-                    label="Password" 
-                    type="password" 
-                    value={this.state.password}/>
-                <TextField sx={{ mb: 4 }} 
-                    onChange={e => this.setState({repeatedPassword: e.target.value})} 
-                    variant="outlined" 
-                    label="Repetir password" 
-                    type="password" 
-                    value={this.state.repeatedPassword}/>
-                </form>
-                <div className='button-container'>
-                <ThemeProvider theme={themeButton}>
+            <form className="register-form">
+                <Stack spacing={2}>
+                    <TextField 
+                        onChange={e => this.setState({firstName: e.target.value})} 
+                        variant="outlined"  
+                        label="Nombre"
+                        size="small"
+                        value={this.state.firstName}
+                    />
+                    <TextField
+                        onChange={e => this.setState({lastName: e.target.value})} 
+                        variant="outlined"  
+                        label="Apellido"
+                        size="small"
+                        value={this.state.lastName} />
+                    <TextField
+                        onChange={e => this.setState({email: e.target.value})} 
+                        variant="outlined" 
+                        label="Email"
+                        size="small"
+                        value={this.state.email}/>
+                    <TextField
+                        onChange={e => this.setState({password: e.target.value})}  
+                        variant="outlined" 
+                        label="Password" 
+                        type="password"
+                        size="small"
+                        value={this.state.password}/>
+                    <TextField
+                        onChange={e => this.setState({repeatedPassword: e.target.value})} 
+                        variant="outlined" 
+                        label="Repetir password" 
+                        type="password"
+                        size="small"
+                        value={this.state.repeatedPassword}/>
                     <Button fullWidth color="primary" variant="contained" onClick={()=>this.registerHandler()}>
                         CONFIRMAR
                     </Button>
-                </ThemeProvider>
-                </div>
-            </section>
+                </Stack>
+            </form>
             )
     }
    
