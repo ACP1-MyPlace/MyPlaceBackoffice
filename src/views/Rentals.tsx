@@ -5,51 +5,6 @@ import { useFetch } from '../fetch/useFetch';
 import { Rental } from '../types/Rentals';
 import "./rentals.css"
 
-
-
-const sampleData : Rental[] = [
-    {    
-        host: "doe@mail.com",
-        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
-        totalReservations: 15,
-
-        id: 1,
-        userId: 2,
-        propertyType: "HOUSE",
-        country: "Argentina",
-        state: "Buenos Aires",
-        street: "Rivadavia",
-        streetNumber: "4523",
-        price: {
-            currency: {
-                currencyId: "USD",
-                currencyName: "Dolares"
-            },
-            amount: 120
-        }
-    },
-    {    
-        host: "doe@mail.com",
-        photo: "https://media.gettyimages.com/photos/modern-apartment-building-facade-picture-id171354810",
-        totalReservations: 23,
-
-        id: 2,
-        userId: 2,
-        propertyType: "APARTMENT",
-        country: "Argentina",
-        state: "Buenos Aires",
-        street: "Rivadavia",
-        streetNumber: "145",
-        price: {
-            currency: {
-                currencyId: "ARS",
-                currencyName: "Pesos ARS"
-            },
-            amount: 5000
-        }
-    }
-]
-
 const getTotalReservationsText = (totalReservations : number) => {
     if(!totalReservations || totalReservations == 0){
         return "Sin reservas"
@@ -93,7 +48,7 @@ const mapRentalToTable = (rental : Rental) => {
             <td> {`${rental.state}, ${rental.street} ${rental.streetNumber}`} </td>
             <td> {getRentalTypeIcon(rental)} </td>
             <td> {`${rental.price.amount} ${rental.price.currency.currencyName}`} </td>
-            <td> {rental.host} </td>
+            <td> {rental.host.mail} </td>
             <td> {getTotalReservationsText(rental.totalReservations)} </td>
             <td> {<BsFillEyeFill size={"25px"} color="#363636"/>} <span /> {<BsPencilSquare size={"25px"} color="#363636"/>} {<BsFillTrashFill color='red' size={"25px"}/>} </td>
         </tr>

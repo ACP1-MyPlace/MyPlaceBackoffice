@@ -1,8 +1,16 @@
+import { User } from "./User";
 
+interface Price{
+    currency: {
+        currencyId:string,
+        currencyName:string
+    },
+    amount: number
+}
 export interface Rental {
     photo: string;
     totalReservations: number;
-    host: string;
+    host: User;
 
     id: number;
     userId: number;
@@ -17,12 +25,7 @@ export interface Rental {
     bathroomCount?: number;
     garageAvailable?: boolean;
     petsAvailable?: boolean;
+    description?: string;
     services?: ("WIFI" | "KITCHEN" | "TV" | "LAUNDRY")[];
-    price: {
-        currency: {
-            currencyId:string,
-            currencyName:string
-        },
-        amount: number
-    }
+    price: Price;
 }
