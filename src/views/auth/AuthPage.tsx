@@ -12,6 +12,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import {AccountLayoutAdmin} from "../../layouts/AccountLayoutAdmin";
 import Login from "./Login";
+import Register from "./Register";
 
 function AuthPage() {
     
@@ -32,6 +33,8 @@ function AuthPage() {
 
                     <Stack p={1}>
                         { (actualTab === 0) && <Login /> }
+                        
+                        { (actualTab === 1) && <Register /> }
                     </Stack>
                 </CardContent>
                 
