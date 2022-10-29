@@ -4,37 +4,43 @@ import { Rentals } from './views/Rentals';
 import AuthPage from "./views/auth/AuthPage";
 import NavBar from './components/Navbar';
 import { HomePage } from './views/HomePage';
+import {userStorage} from "./userSession/userStorage";
+import {PrivateRoute} from "./components/PrivateRoute";
+import {PublicWithoutUserRoute} from "./components/PublicWithoutUserRoute";
 
 
 const NotLoggedInWeb = () => {
   return <>
         <Routes>
-            <Route path="/" element={<AuthPage />} />
-            <Route path="/auth" element={<AuthPage />} />
+            <Route element={<PublicWithoutUserRoute />}>
+                <Route path="/auth" element={<AuthPage />} />
+            </Route>
         </Routes>
   </>
 }
 
 const LoggedInWeb = () => {
   return <>
-        <NavBar />
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/rentals" element={<Rentals />} />
-        </Routes>
+      { userStorage.isLogged() && <NavBar /> }
+
+      <Routes>
+          <Route element={<PrivateRoute />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/rentals" element={<Rentals />} />
+          </Route>
+      </Routes>
   </>
 }
 
 function App() {
-  const loggedIn = true // check if there is a token
-  return (
-    <div>
-      <BrowserRouter>
-        {!loggedIn && <NotLoggedInWeb />}
-        {loggedIn && <LoggedInWeb />}
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div>
+            <BrowserRouter>
+                <NotLoggedInWeb />
+                <LoggedInWeb />
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;

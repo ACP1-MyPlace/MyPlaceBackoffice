@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {ControlledTextField, ControlledTextFieldPassword} from "../../components/ControlledTextField";
 import {Button, Stack} from "@mui/material";
+import {userStorage} from "../../userSession/userStorage";
+import {useNavigate} from "react-router-dom";
 
 enum LoginFormFields {
     Email = 'email',
@@ -16,6 +18,7 @@ interface LoginForm {
 }
 
 function Login () {
+    const navigate = useNavigate();
     
     const loginSchema = yup.object().shape({
         [LoginFormFields.Email]: yup.string().email('El campo debe ser un mail válido').required('Campo obligatorio'),
@@ -42,7 +45,10 @@ function Login () {
                     body: JSON.stringify(body)
                 })
             if(response.status === 200) {
-                alert('User successfully')
+                var dataResponse = await response.json();
+                alert('User successfully');
+                userStorage.logInUser(dataResponse.token);
+                navigate('/');
             } else {
                 alert('An error has ocurred')
             }
