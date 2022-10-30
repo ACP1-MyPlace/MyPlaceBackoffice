@@ -2,11 +2,10 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { Rentals } from './views/Rentals';
 import AuthPage from "./views/auth/AuthPage";
-import NavBar from './components/Navbar';
 import { HomePage } from './views/HomePage';
-import {userStorage} from "./userSession/userStorage";
 import {PrivateRoute} from "./components/PrivateRoute";
 import {PublicWithoutUserRoute} from "./components/PublicWithoutUserRoute";
+import LayoutHome from "./layouts/LayoutHome";
 
 
 const NotLoggedInWeb = () => {
@@ -21,12 +20,12 @@ const NotLoggedInWeb = () => {
 
 const LoggedInWeb = () => {
   return <>
-      { userStorage.isLogged() && <NavBar /> }
-
       <Routes>
           <Route element={<PrivateRoute />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/rentals" element={<Rentals />} />
+              <Route element={<LayoutHome />}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/rentals" element={<Rentals />} />
+              </Route>
           </Route>
       </Routes>
   </>
